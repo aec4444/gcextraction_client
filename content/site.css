@@ -1,0 +1,60 @@
+﻿.grid-height {
+  height: 550px;
+}
+
+.stat-cell {
+  width: 25px
+}
+
+.avg-cell {
+  width: 40px
+}
+
+.avgbig-cell {
+  width: 50px
+}
+
+.jersey-cell {
+  width: 25px;
+}
+
+.name-cell {
+  width: 125px;
+}
+
+.jumbotron {
+  background-color: white;
+  color: black;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.pride-logo {
+  height: 50px;
+}
+
+.k-tabstrip-items {
+  background-color: black;
+  color: red;
+}
+
+.k-tabstrip-items .k-state-default .k-link {
+  color: white;
+  background-color: black;
+}
+
+
+.k-tabstrip-items .k-state-active .k-link {
+  background-color: white;
+  color: red;
+}
+
+.k-tabstrip-items .k-state-hover .k-link {
+  color: white;
+  background-color: red;
+  border-color: red
+}
+
+.filterRow {
+  margin-bottom: 10px
+}

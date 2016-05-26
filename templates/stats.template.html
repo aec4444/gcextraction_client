@@ -1,0 +1,101 @@
+
+
+<div class="container-fluid">
+  <div class="hidden-xs hidden-sm jumbotron">
+    <div class="row">
+      <div class="col-xs-1">
+        <img class="pride-logo pull-xs-left" ng-src="content/images/pridelogo.jpg" />
+      </div>
+      <div class="col-xs-10 text-center">
+        <h2>{{vm.name}}</h2>
+      </div>
+      <div class="col-xs-1">
+        <img class="pride-logo pull-xs-right" ng-src="content/images/pridelogo.jpg" />
+      </div>
+    </div>
+  </div>
+  <div class="hidden-md hidden-lg jumbotron">
+    <h2>{{vm.name}}</h2>
+  </div>
+
+  <div kendo-tab-strip k-content-urls="[ null, null, null]">
+    <!-- tab list -->
+    <ul>
+      <li class="k-state-active">Schedule</li>
+      <li>Batting Stats</li>
+      <li>Pitches Seen</li>
+      <li>Hitting with Outs</li>
+      <li>Hitting with Runners On</li>
+      <li>Hit Distribution</li>
+      <li>Field Distribution</li>
+      <li>Pitching Stats</li>
+    </ul>
+
+    <div style="padding: 1em">
+      <div class="panel panel-default">
+        <div class="panel-heading">Select Games to use in Statistics</div>
+        <div class="panel-body">
+          <div class="text-center filterRow">
+            Use the checkboxes below to select games based on type.
+          </div>
+          <div class="text-center filterRow">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxLeague" ng-model="vm.gameSelection.league"> League
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxNonLeague" ng-model="vm.gameSelection.nonLeague"> Non-League
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxPostseason" ng-model="vm.gameSelection.postSeason"> Post Season
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxExhibition" ng-model="vm.gameSelection.exhibition"> Exhibition
+            </label>
+          </div>
+          <div class="text-center filterRow">
+            <button type="button" class="btn btn-disabled btn-primary" if-loading>
+              <span if-loading>
+                <span class="fa fa-spinner fa-spin"></span> Loading...
+              </span>
+            </button>
+
+            <button type="button" ng-click="vm.refreshData()" class="btn btn-primary" if-not-loading>
+                Refresh Statistics
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-height" kendo-grid="vm.optionsScheduleGrid.gridObject" k-options="vm.optionsScheduleGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsStatsGrid.gridObject" k-options="vm.optionsStatsGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsPitchesSeenGrid.gridObject" k-options="vm.optionsPitchesSeenGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsOutsGrid.gridObject" k-options="vm.optionsOutsGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsRunnersGrid.gridObject" k-options="vm.optionsRunnersGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsDistGrid.gridObject" k-options="vm.optionsDistGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsFieldGrid.gridObject" k-options="vm.optionsFieldGrid"></div>
+    </div>
+
+    <div style="padding: 1em">
+      <div class="grid-height" kendo-grid="vm.optionsPitchStatsGrid.gridObject" k-options="vm.optionsPitchStatsGrid"></div>
+    </div>
+  </div>
+</div>
+
