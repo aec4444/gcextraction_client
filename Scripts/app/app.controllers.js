@@ -16,7 +16,7 @@ app.controller('GameChangerScheduleController', [
     var team = $stateParams.team;
     vm.name = $globals.getKeys(team).displayName;
 
-    var sumValuesPrimitive = function(itemList, key, totalKey) {
+    var sumValuesPrimitive = function (itemList, key, totalKey) {
       if (!angular.isArray(itemList)) {
         itemList = [itemList];
       }
@@ -44,7 +44,7 @@ app.controller('GameChangerScheduleController', [
       if (totalKey === undefined)
         totalKey = "total";
 
-      angular.forEach(itemList, function(item) {
+      angular.forEach(itemList, function (item) {
         if (item[totalKey] === undefined)
           item[totalKey] = {};
 
@@ -112,7 +112,7 @@ app.controller('GameChangerScheduleController', [
       exhibition: false,
       postSeason: true
     };
-    $scope.$watch("vm.gameSelection", function() {
+    $scope.$watch("vm.gameSelection", function () {
       // set checkboxes appropriately if set
       if (vm.optionsScheduleGrid !== undefined && vm.optionsScheduleGrid.gridObject !== undefined) {
         var ds = vm.optionsScheduleGrid.gridObject.dataSource;
@@ -172,16 +172,16 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "pa", title: "PA", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "pitches", title: "Pitches", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "pitchesPerPa", format: "{0:n3}", title: "Pitches / PA", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "strikesLooking", title: "Strikes / L", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "strikesSwinging", title: "Strikes / S", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "fouls", title: "Fouls", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "balls", title: "Balls", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "inPlay", title: "In Play", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } }
+        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
+        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "pa", title: "PA", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pitches", title: "Pitches", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
+        { field: "pitchesPerPa", format: "{0:n3}", title: "Pitches / PA", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "strikesLooking", title: "Strikes / L", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "strikesSwinging", title: "Strikes / S", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "fouls", title: "Fouls", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "balls", title: "Balls", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "inPlay", title: "In Play", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
       ],
       excel: {
         allPages: true,
@@ -206,16 +206,16 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs0.AVG", title: "AVG (0 Outs)", template: "#= kendo.toString(outs0.AVG, 'n3')# (#= outs0.H#-#= outs0.AB#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs0.OBP", title: "OBP (0 Outs)", template: "#= kendo.toString(outs0.OBP, 'n3')# (#= outs0.OnBase#-#= outs0.PA#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs1.AVG", title: "AVG (1 Outs)", template: "#= kendo.toString(outs1.AVG, 'n3')# (#= outs1.H#-#= outs1.AB#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs1.OBP", title: "OBP (1 Outs)", template: "#= kendo.toString(outs1.OBP, 'n3')# (#= outs1.OnBase#-#= outs1.PA#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs2.AVG", title: "AVG (2 Outs)", template: "#= kendo.toString(outs2.AVG, 'n3')# (#= outs2.H#-#= outs2.AB#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "outs2.OBP", title: "OBP (2 Outs)", template: "#= kendo.toString(outs2.OBP, 'n3')# (#= outs2.OnBase#-#= outs2.PA#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "total.AVG", title: "AVG (Total)", template: "#= kendo.toString(total.AVG, 'n3')# (#= total.H#-#= total.AB#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "total.OBP", title: "OBP (Total)", template: "#= kendo.toString(total.OBP, 'n3')# (#= total.OnBase#-#= total.PA#)", attributes: { "class": "text-right col-xs-1" }, headerAttributes: { "class": "col-xs-1" } }
+        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
+        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "outs0.AVG", title: "AVG (0 Outs)", template: "#= kendo.toString(outs0.AVG, 'n3')# (#= outs0.H#-#= outs0.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "outs0.OBP", title: "OBP (0 Outs)", template: "#= kendo.toString(outs0.OBP, 'n3')# (#= outs0.OnBase#-#= outs0.PA#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "outs1.AVG", title: "AVG (1 Outs)", template: "#= kendo.toString(outs1.AVG, 'n3')# (#= outs1.H#-#= outs1.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "outs1.OBP", title: "OBP (1 Outs)", template: "#= kendo.toString(outs1.OBP, 'n3')# (#= outs1.OnBase#-#= outs1.PA#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "outs2.AVG", title: "AVG (2 Outs)", template: "#= kendo.toString(outs2.AVG, 'n3')# (#= outs2.H#-#= outs2.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "outs2.OBP", title: "OBP (2 Outs)", template: "#= kendo.toString(outs2.OBP, 'n3')# (#= outs2.OnBase#-#= outs2.PA#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "total.AVG", title: "AVG (Total)", template: "#= kendo.toString(total.AVG, 'n3')# (#= total.H#-#= total.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "total.OBP", title: "OBP (Total)", template: "#= kendo.toString(total.OBP, 'n3')# (#= total.OnBase#-#= total.PA#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } }
       ],
       excel: {
         allPages: true,
@@ -332,7 +332,7 @@ app.controller('GameChangerScheduleController', [
           { field: "player.num", dir: "asc" }
         ],
         transport: {
-          read: function(e) {
+          read: function (e) {
             e.success(vm.data.fieldData);
           }
         }
@@ -480,7 +480,7 @@ app.controller('GameChangerScheduleController', [
 
       // only include games where include = true;
       var dataInclude = [];
-      angular.forEach(vm.schedule, function(game) {
+      angular.forEach(vm.schedule, function (game) {
         if (game.include)
           dataInclude.push(game);
       });
@@ -539,7 +539,7 @@ app.controller('GameChangerScheduleController', [
         });
         vm.optionsStatsGrid.gridObject.dataSource.read();
 
-        angular.forEach(vm.data.pitchStatsData, function(item) {
+        angular.forEach(vm.data.pitchStatsData, function (item) {
           item.stats.PitchesThrown = item.stats["#P"];
           item.stats.GP = item.stats["GP:P"];
         });
