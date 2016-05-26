@@ -47,8 +47,14 @@
   routeProviderConfig.$inject = ["$stateProvider", "$urlRouterProvider"];
   function routeProviderConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state("variable", {
+      .state("known", {
         url: "/team/{team}",
+        templateUrl: "templates/stats.template.html",
+        controller: "GameChangerScheduleController",
+        controllerAs: "vm",
+      })
+      .state("specs", {
+        url: "/gc/{season}/{name}/{teamId}",
         templateUrl: "templates/stats.template.html",
         controller: "GameChangerScheduleController",
         controllerAs: "vm"

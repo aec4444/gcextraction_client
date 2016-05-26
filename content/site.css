@@ -29,7 +29,25 @@
   color: black;
   padding-top: 16px;
   padding-bottom: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
+
+@media only screen and (max-width: 992px) {
+  .jumbotron {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  h2 {
+    font-size: 14pt;
+  }
+}
+
 
 .pride-logo {
   height: 50px;

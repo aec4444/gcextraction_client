@@ -32,7 +32,13 @@
     season: "spring-2016",
     displayName: "PA Ball Hawks 10U"
   };
-
+  teamKeys["NJFIGHT"] = {
+    name: "nj-fight",
+    teamId: "56f66238c7dd559da5000001",
+    season: "spring-2016",
+    displayName: "NJ Fight 10U"
+  };
+  
   return {
     defaultTeam: "10",
     teamKeys: teamKeys,
@@ -47,9 +53,7 @@
 app.factory("$gameChanger", [
   "$http", "$globals",
   function ($http, $globals) {
-    var getRoster = function (team, success) {
-      var keys = $globals.getKeys(team);
-
+    var getRoster = function (keys, success) {
       // build the url to get the schedule.  You have to get it from a page, there isn't a rest service.  
       var url = $globals.statsUrl + "/roster";
 
@@ -64,9 +68,7 @@ app.factory("$gameChanger", [
       });
     };
 
-    var getSchedule = function (team, success) {
-      var keys = $globals.getKeys(team);
-
+    var getSchedule = function (keys, success) {
       // build the url to get the schedule.  You have to get it from a page, there isn't a rest service.  
       var url = $globals.statsUrl + "/schedule";
 
@@ -81,9 +83,7 @@ app.factory("$gameChanger", [
       });
     };
 
-    var getStats = function (team, games, success) {
-      var keys = $globals.getKeys(team);
-
+    var getStats = function (keys, games, success) {
       // build the url to get the schedule.  You have to get it from a page, there isn't a rest service.  
       var url = $globals.statsUrl + "/stats";
 

@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div class="hidden-md hidden-lg jumbotron">
+  <div class="hidden-md hidden-lg jumbotron text-center">
     <h2>{{vm.name}}</h2>
   </div>
 
@@ -54,9 +54,7 @@
           </div>
           <div class="text-center filterRow">
             <button type="button" class="btn btn-disabled btn-primary" if-loading>
-              <span if-loading>
-                <span class="fa fa-spinner fa-spin"></span> Loading...
-              </span>
+              <span class="fa fa-spinner fa-spin"></span> Loading...
             </button>
 
             <button type="button" ng-click="vm.refreshData()" class="btn btn-primary" if-not-loading>

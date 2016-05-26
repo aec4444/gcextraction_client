@@ -1,20 +1,38 @@
 app.controller('GameChangerScheduleController', [
-  '$scope', '$gameChanger', '$stateParams', "$globals", "$filter",
-  function ($scope, $gameChanger, $stateParams, $globals, $filter) {
+  '$scope', '$gameChanger', '$stateParams', "$globals", "$filter", "$state",
+  function ($scope, $gameChanger, $stateParams, $globals, $filter, $state) {
     var vm = this;
-    var clearData = {
+    vm.data = {
       pitchData: [],
       countData: [],
       outData: [],
       runnersData: [],
       distData: [],
-      fieldData: []
+      fieldData: [],
+      statData: [],
+      pitchStatsData: []
     };
 
-    vm.data = angular.copy(clearData);
+    var teamKeys = undefined;
+    switch ($state.current.name) {
+      case "specs":
+        teamKeys = {
+          season: $stateParams.season,
+          name: $stateParams.name,
+          teamId: $stateParams.teamId,
+          displayName: $stateParams.name
+        };
+        break;
+      default:
+        var team = $stateParams.team;
+        if (team !== undefined)
+          team = team.toUpperCase();
 
-    var team = $stateParams.team;
-    vm.name = $globals.getKeys(team).displayName;
+        teamKeys = $globals.getKeys(team);
+        break;
+    }
+    
+    vm.name = teamKeys.displayName;
 
     var sumValuesPrimitive = function (itemList, key, totalKey) {
       if (!angular.isArray(itemList)) {
@@ -402,8 +420,8 @@ app.controller('GameChangerScheduleController', [
         { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
         { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
         { field: "stats.GP", title: "GP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "stats.IP", format: "{0:n1}", title: "IP", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
         { field: "stats.GS", title: "GS", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "stats.IP", format: "{0:n1}", title: "IP", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
         { field: "stats.W", title: "W", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.L", title: "L", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.H", title: "H", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
@@ -441,7 +459,7 @@ app.controller('GameChangerScheduleController', [
 
     function loadSchedule(callback) {
       // get the schedule
-      $gameChanger.getSchedule(team, function (data) {
+      $gameChanger.getSchedule(teamKeys, function (data) {
         angular.forEach(data, function (item) {
           if (item.result === undefined) {
             item.result = "TBD";
@@ -485,7 +503,7 @@ app.controller('GameChangerScheduleController', [
           dataInclude.push(game);
       });
 
-      $gameChanger.getStats(team, dataInclude, function (data) {
+      $gameChanger.getStats(teamKeys, dataInclude, function (data) {
         vm.data = data;
 
         angular.forEach(vm.data.pitchData, function (item) {
