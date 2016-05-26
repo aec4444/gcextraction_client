@@ -175,10 +175,10 @@ app.controller('GameChangerScheduleController', [
         { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
         { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
         { field: "pa", title: "PA", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pitches", title: "Pitches", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
-        { field: "pitchesPerPa", format: "{0:n3}", title: "Pitches / PA", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "strikesLooking", title: "Strikes / L", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "strikesSwinging", title: "Strikes / S", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pitches", title: "P Seen", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pitchesPerPa", format: "{0:n3}", title: "P / PA", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
+        { field: "strikesLooking", title: "K / L", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "strikesSwinging", title: "K / S", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "fouls", title: "Fouls", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "balls", title: "Balls", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "inPlay", title: "In Play", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
@@ -193,7 +193,7 @@ app.controller('GameChangerScheduleController', [
       dataSource: new kendo.data.DataSource({
         transport: {
           sort: [
-            { field: "player.num", dir: "asc" }
+            { field: "pitchesPerPa", dir: "desc" }
           ],
           read: function (e) {
             e.success(vm.data.pitchData);
@@ -240,6 +240,8 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
+        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
+        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
         { field: "empty.AVG", title: "AVG (Empty)", template: "#= kendo.toString(empty.AVG, 'n3')# (#= empty.H#-#= empty.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "empty.OBP", title: "OBP (Empty)", template: "#= kendo.toString(empty.OBP, 'n3')# (#= empty.OnBase#-#= empty.PA#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "onbase.AVG", title: "AVG (On Base)", template: "#= kendo.toString(onbase.AVG, 'n3')# (#= onbase.H#-#= onbase.AB#)", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
@@ -290,7 +292,7 @@ app.controller('GameChangerScheduleController', [
       resizable: true,
       dataSource: new kendo.data.DataSource({
         sort: [
-          { field: "player.num", dir: "asc" }
+          { field: "total", dir: "desc" }
         ],
         transport: {
           read: function (e) {
@@ -361,7 +363,7 @@ app.controller('GameChangerScheduleController', [
         { field: "stats.RBI", title: "RBI", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.BB", title: "BB", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.HBP", title: "HBP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "stats.SO", title: "K / KL", template: "#= stats.SO# / #= stats.SOL#", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "stats.SO", title: "K / KL", template: "#= stats.SO# / #= stats.SOL#", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
         { field: "stats.SB", title: "SB", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.CS", title: "CS", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.LOB", title: "LOB", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
@@ -400,7 +402,7 @@ app.controller('GameChangerScheduleController', [
         { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
         { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
         { field: "stats.GP", title: "GP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "stats.IP", format: "{0:n1}", title: "IP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "stats.IP", format: "{0:n1}", title: "IP", attributes: { "class": "text-right avg-cell" }, headerAttributes: { "class": "avg-cell" } },
         { field: "stats.GS", title: "GS", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.W", title: "W", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.L", title: "L", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
@@ -427,7 +429,7 @@ app.controller('GameChangerScheduleController', [
       resizable: true,
       dataSource: new kendo.data.DataSource({
         sort: [
-          { field: "stats.ERA", dir: "asc" }
+          { field: "stats.IP", dir: "desc" }
         ],
         transport: {
           read: function (e) {
