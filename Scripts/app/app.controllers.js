@@ -759,7 +759,9 @@ app.controller('GameChangerScheduleController', [
         { field: "pos10", title: "10", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "pos11", title: "11", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "pos12", title: "12", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "total", title: "Total", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
+        { field: "total", title: "Started", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos0", title: "DNS", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "absent", title: "Absent", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
       ],
       excel: {
         allPages: true,
@@ -898,6 +900,7 @@ app.controller('GameChangerScheduleController', [
         
         angular.forEach(vm.data.battingOrderData, function (item) {
           item.total = 0;
+          item.absent = item["pos-1"];
           for (var i = 1; i <= 12; i++)
             item.total += item["pos" + i];
         });
