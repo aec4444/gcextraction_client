@@ -562,7 +562,16 @@ app.controller('GameChangerScheduleController', [
         return vm.optionsAggregateFunctions.getAvg(vm.optionsStatsGrid, ["stats.HRISP"], ["stats.ABRISP"], "n3");
       },
       GP: function() {
-        return vm.schedule === undefined ? 0 : vm.schedule.length;
+        if (vm.schedule) {
+          // get just the games selected
+          var count = 0;
+          for (var i = 0; i < vm.schedule.length; i++) {
+            if (vm.schedule[i].include)
+              count++;
+          }
+          return count;
+        }
+        return 0;
       }
     };
     
@@ -732,6 +741,53 @@ app.controller('GameChangerScheduleController', [
     };
     vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsPitchStatsGrid.columns);
     
+    vm.optionsBattingOrderGrid = {
+      gridObject: null,
+      autoBind: false,
+      columns: [
+        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
+        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "pos1", title: "1", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos2", title: "2", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos3", title: "3", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos4", title: "4", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos5", title: "5", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos6", title: "6", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos7", title: "7", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos8", title: "8", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos9", title: "9", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos10", title: "10", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos11", title: "11", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "pos12", title: "12", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
+        { field: "total", title: "Total", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
+      ],
+      excel: {
+        allPages: true,
+        fileName: "fielding.xlsx",
+        filterable: true
+      },
+      sortable: true,
+      resizable: true,
+      dataSource: new kendo.data.DataSource({
+        sort: [
+          { field: "player.num", dir: "asc" }
+        ],
+        transport: {
+          read: function (e) {
+            e.success(vm.data.battingOrderData);
+          }
+        }
+      })
+    };
+
+    angular.forEach(vm.optionsFieldGrid.columns, function (col, i) {
+      var fieldKey = col.field.substr(0, col.field.length - 6);
+
+      if (i >= 2)
+        col.template = "#= " + fieldKey + ".start # / #= " + col.field + "# (#= kendo.toString(" + fieldKey + ".innings, 'n1')#)";
+    });
+    
+    
     function loadSchedule(callback) {
       // get the schedule
       $gameChanger.getSchedule(teamKeys, function (data) {
@@ -769,7 +825,7 @@ app.controller('GameChangerScheduleController', [
       vm.optionsFieldGrid.gridObject.dataSource.data([]);
       vm.optionsStatsGrid.gridObject.dataSource.data([]);
       vm.optionsPitchStatsGrid.gridObject.dataSource.data([]);
-
+      vm.optionsBattingOrderGrid.gridObject.dataSource.data([]);
 
       // only include games where include = true;
       var dataInclude = [];
@@ -838,6 +894,14 @@ app.controller('GameChangerScheduleController', [
           item.stats.GP = item.stats["GP:P"];
         });
         vm.optionsPitchStatsGrid.gridObject.dataSource.read();
+        
+        
+        angular.forEach(vm.data.battingOrderData, function (item) {
+          item.total = 0;
+          for (var i = 1; i <= 12; i++)
+            item.total += item["pos" + i];
+        });
+        vm.optionsBattingOrderGrid.gridObject.dataSource.read();
       });
     }
 
