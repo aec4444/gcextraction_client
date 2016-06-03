@@ -179,6 +179,20 @@ app.controller('GameChangerScheduleController', [
                 break;
             }
         });
+      },
+      getRC: function(AB, H, BB, CS, HBP, Double, Triple, HR, SAC, SB, PA) {
+        var part1 = (H + BB + CS + HBP);
+        var part2 = (H + Double + Triple * 2 + HR * 3);
+        part2 += (0.26 * (BB + HBP));
+        part2 += (0.52 * (SAC + SB));
+        part1 *= part2;
+        
+        return part1 / (PA || 1);
+      },
+      autoFitColumns: function(grid) {
+        //for (var i = 0; i < grid.columns.length; i++) {
+        //  grid.autoFitColumn(i);
+        //}
       }
     };
     
@@ -204,16 +218,6 @@ app.controller('GameChangerScheduleController', [
         return "";
     };
     
-    vm.optionsAggregateFunctions.getRC = function(AB, H, BB, CS, HBP, Double, Triple, HR, SAC, SB, PA) {
-      var part1 = (H + BB + CS + HBP);
-      var part2 = (H + Double + Triple * 2 + HR * 3);
-      part2 += (0.26 * (BB + HBP));
-      part2 += (0.52 * (SAC + SB));
-      part1 *= part2;
-      
-      return part1 / (PA || 1);
-    }
-    
     vm.optionsScheduleGrid = {
       mobile: false,
       gridObject: null,
@@ -234,6 +238,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsScheduleGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "play_time", dir: "desc" }
@@ -277,6 +282,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsPitchesSeenGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "pitchesPerPa", dir: "desc" }
@@ -348,6 +354,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsOutsGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "player.num", dir: "asc" }
@@ -462,6 +469,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsDistGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "total", dir: "desc" }
@@ -508,6 +516,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsFieldGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "player.num", dir: "asc" }
@@ -640,6 +649,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsStatsGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "stats.AVG", dir: "desc" }
@@ -738,6 +748,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsPitchStatsGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "stats.IP", dir: "desc" }
@@ -794,6 +805,7 @@ app.controller('GameChangerScheduleController', [
       },
       sortable: true,
       resizable: true,
+      dataBound: function() {vm.optionsAggregateFunctions.autoFitColumns(vm.optionsBattingOrderGrid.gridObject);},
       dataSource: new kendo.data.DataSource({
         sort: [
           { field: "player.num", dir: "asc" }
