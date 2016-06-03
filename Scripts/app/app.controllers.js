@@ -204,6 +204,16 @@ app.controller('GameChangerScheduleController', [
         return "";
     };
     
+    vm.optionsAggregateFunctions.getRC = function(AB, H, BB, CS, HBP, Double, Triple, HR, SAC, SB, PA) {
+      var part1 = (H + BB + CS + HBP);
+      var part2 = (H + Double + Triple * 2 + HR * 3);
+      part2 += (0.26 * (BB + HBP));
+      part2 += (0.52 * (SAC + SB));
+      part1 *= part2;
+      
+      return part1 / (PA || 1);
+    }
+    
     vm.optionsScheduleGrid = {
       mobile: false,
       gridObject: null,
@@ -242,14 +252,15 @@ app.controller('GameChangerScheduleController', [
         return vm.optionsAggregateFunctions.getAvg(vm.optionsPitchesSeenGrid, ["pitches"], ["pa"], "n3");
       }
     };
+
+//        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" } },
     
     vm.optionsPitchesSeenGrid = {
       mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", footerTemplate: "Totals", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" } },
+        { field: "player.lname", footerTemplate: "Totals", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "pa", aggregates: ["sum"], title: "PA", attributes: { "class": "text-right stat-cell" } },
         { field: "pitches", aggregates: ["sum"], title: "P Seen", attributes: { "class": "text-right stat-cell" } },
         { field: "pitchesPerPa", footerTemplate: vm.optionsAggregateFunctions.pitches.pitchesPerPa, format: "{0:n3}", title: "P / PA", attributes: { "class": "text-right avg-cell" } },
@@ -320,8 +331,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", footerTemplate: "Total", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "player.lname", locked: false, footerTemplate: "Total", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "outs0.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.AVG("outs0");}, title: "AVG (0 Outs)", template: "#= kendo.toString(outs0.AVG, 'n3')# (#= outs0.H#-#= outs0.AB#)", attributes: { "class": "text-right avgbig-cell" } },
         { field: "outs0.OBP", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.OBP("outs0");}, title: "OBP (0 Outs)", template: "#= kendo.toString(outs0.OBP, 'n3')# (#= outs0.OnBase#-#= outs0.PA#)", attributes: { "class": "text-right avgbig-cell" } },
         { field: "outs1.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.AVG("outs1");}, title: "AVG (1 Outs)", template: "#= kendo.toString(outs1.AVG, 'n3')# (#= outs1.H#-#= outs1.AB#)", attributes: { "class": "text-right avgbig-cell" } },
@@ -383,8 +393,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }},
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }},
+        { field: "player.lname", locked: false, title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }},
         { field: "empty.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.AVG("empty");}, title: "AVG (Empty)", template: "#= kendo.toString(empty.AVG, 'n3')# (#= empty.H#-#= empty.AB#)", attributes: { "class": "text-right avgbig-cell" }},
         { field: "empty.OBP", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.OBP("empty");}, title: "OBP (Empty)", template: "#= kendo.toString(empty.OBP, 'n3')# (#= empty.OnBase#-#= empty.PA#)", attributes: { "class": "text-right avgbig-cell" }},
         { field: "onbase.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.AVG("onbase");}, title: "AVG (On Base)", template: "#= kendo.toString(onbase.AVG, 'n3')# (#= onbase.H#-#= onbase.AB#)", attributes: { "class": "text-right avgbig-cell" }},
@@ -438,8 +447,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" } },
+        { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "if", aggregates: ["sum"], title: "Infield", attributes: { "class": "text-right stat-cell" } },
         { field: "of", aggregates: ["sum"], title: "Outfield", attributes: { "class": "text-right stat-cell" } },
         { field: "left", aggregates: ["sum"], title: "Left Side", attributes: { "class": "text-right stat-cell" } },
@@ -480,8 +488,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
         { field: "P.games", title: "P", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "C.games", title: "C", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "field1B.games", title: "1B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
@@ -538,6 +545,15 @@ app.controller('GameChangerScheduleController', [
     };
     
     var statFunctions = {
+      RC: function() {
+        var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
+        var rc = 0;
+        if (agg != null) {
+          rc = vm.optionsAggregateFunctions.getRC(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum);
+        }
+        
+        return kendo.toString(rc, "n3");
+      },
       SO: function() {
         if (vm.optionsStatsGrid !== undefined) {
           var ds = vm.optionsStatsGrid.dataSource;
@@ -590,8 +606,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", footerTemplate: "", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
+        { field: "player.lname", locked: false, title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "stats.GP", footerTemplate: vm.optionsAggregateFunctions.stats.GP, title: "GP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.PA", aggregates: ["sum"], title: "PA", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.AB", aggregates: ["sum"], title: "AB", attributes: { "class": "text-right stat-cell" } },
@@ -603,8 +618,8 @@ app.controller('GameChangerScheduleController', [
         { field: "stats.RBI", aggregates: ["sum"], title: "RBI", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.BB", aggregates: ["sum"], title: "BB", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.HBP", aggregates: ["sum"], title: "HBP", attributes: { "class": "text-right stat-cell" } },
-        { field: "stats.SO", footerTemplate: vm.optionsAggregateFunctions.stats.SO, title: "K / KL", template: "#= stats.SO# / #= stats.SOL#", attributes: { "class": "text-right avg-cell" } },
-        { field: "stats.KPCT", footerTemplate: vm.optionsAggregateFunctions.stats.KPCT, format: "{0:0.00%}", title: "K%", attributes: { "class": "text-right avg-cell" } },
+        { field: "stats.SO", footerTemplate: vm.optionsAggregateFunctions.stats.SO, title: "K / KL", template: "#= stats.SO# / #= stats.SOL#", attributes: { "class": "text-right avgbig-cell" } },
+        { field: "stats.KPCT", footerTemplate: vm.optionsAggregateFunctions.stats.KPCT, format: "{0:0.00%}", title: "K%", attributes: { "class": "text-right avgbig-cell" } },
         { field: "stats.SB", aggregates: ["sum"], title: "SB", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.CS", aggregates: ["sum"], title: "CS", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.LOB", aggregates: ["sum"], title: "LOB", attributes: { "class": "text-right stat-cell" } },
@@ -615,7 +630,8 @@ app.controller('GameChangerScheduleController', [
         { field: "stats.SLG", footerTemplate: vm.optionsAggregateFunctions.stats.SLG, format: "{0:n3}", title: "SLG", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.OPS", footerTemplate: vm.optionsAggregateFunctions.stats.OPS, format: "{0:n3}", title: "OPS", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.AVGRISP", footerTemplate: vm.optionsAggregateFunctions.stats.AVGRISP, format: "{0:n3}", title: "AVG-RISP", attributes: { "class": "text-right avgbig-cell" } },
-        { field: "stats.QABPCT", footerTemplate: vm.optionsAggregateFunctions.stats.QABPCT, format: "{0:0.00%}", title: "QAB%", attributes: { "class": "text-right avg-cell" } }
+        { field: "stats.QABPCT", footerTemplate: vm.optionsAggregateFunctions.stats.QABPCT, format: "{0:0.00%}", title: "QAB%", attributes: { "class": "text-right avg-cell" } },
+        { field: "stats.RC", footerTemplate: vm.optionsAggregateFunctions.stats.RC, format: "{0:n3}", title: "RC", attributes: { "class": "text-right avgbig-cell" } }
       ],
       excel: {
         allPages: true,
@@ -695,8 +711,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" } },
+        { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "stats.GP", footerTemplate: vm.optionsAggregateFunctions.stats.GP, title: "GP", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.GS", title: "GS", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.IP", footerTemplate: vm.optionsAggregateFunctions.pitchStats.IP, format: "{0:n1}", title: "IP", attributes: { "class": "text-right avg-cell" } },
@@ -755,27 +770,26 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.fname", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
-        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" }, headerAttributes: { "class": "jersey-cell" } },
-        { field: "pos1", title: "1", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos2", title: "2", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos3", title: "3", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos4", title: "4", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos5", title: "5", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos6", title: "6", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos7", title: "7", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos8", title: "8", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos9", title: "9", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos10", title: "10", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos11", title: "11", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos12", title: "12", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "total", title: "Started", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "pos0", title: "DNS", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
-        { field: "absent", title: "Absent", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } }
+        { field: "player.fname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "pos1", title: "1", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos2", title: "2", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos3", title: "3", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos4", title: "4", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos5", title: "5", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos6", title: "6", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos7", title: "7", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos8", title: "8", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos9", title: "9", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos10", title: "10", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos11", title: "11", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos12", title: "12", attributes: { "class": "text-right stat-cell" } },
+        { field: "total", title: "Started", attributes: { "class": "text-right stat-cell" } },
+        { field: "pos0", title: "DNS", attributes: { "class": "text-right stat-cell" } },
+        { field: "absent", title: "Absent", attributes: { "class": "text-right stat-cell" } }
       ],
       excel: {
         allPages: true,
-        fileName: "fielding.xlsx",
+        fileName: "battingOrder.xlsx",
         filterable: true
       },
       sortable: true,
@@ -791,6 +805,7 @@ app.controller('GameChangerScheduleController', [
         }
       })
     };
+    vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsBattingOrderGrid.columns);
 
     angular.forEach(vm.optionsFieldGrid.columns, function (col, i) {
       var fieldKey = col.field.substr(0, col.field.length - 6);
@@ -898,6 +913,8 @@ app.controller('GameChangerScheduleController', [
           item.stats.Triple = item.stats["3B"];
           item.stats.SAC = item.stats.SHB + item.stats.SHF;
           item.stats.KPCT = item.stats.SO / (item.stats.PA || 1)
+          
+          item.stats.RC = vm.optionsAggregateFunctions.getRC(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA);
         });
         vm.optionsStatsGrid.gridObject.dataSource.read();
 

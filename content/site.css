@@ -78,3 +78,31 @@
 .filterRow {
   margin-bottom: 10px
 }
+
+.schedule-include {
+  width: 50px;
+}
+
+.schedule-datetime {
+  width: 150px;
+}
+
+.schedule-location {
+  width: 200px;
+}
+
+.schedule-opponent {
+  width: 200px;
+}
+
+.schedule-type {
+  width: 150px;
+}
+
+.schedule-result {
+  width: 100px;
+}
+
+.schedule-record {
+  width: 125px;
+}
