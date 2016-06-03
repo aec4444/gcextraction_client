@@ -205,6 +205,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsScheduleGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -242,6 +243,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsPitchesSeenGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -313,6 +315,7 @@ app.controller('GameChangerScheduleController', [
     }
     
     vm.optionsOutsGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -375,6 +378,7 @@ app.controller('GameChangerScheduleController', [
     }
     
     vm.optionsRunnersGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -429,6 +433,7 @@ app.controller('GameChangerScheduleController', [
     
 
     vm.optionsDistGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -470,6 +475,7 @@ app.controller('GameChangerScheduleController', [
     vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsDistGrid.columns);
 
     vm.optionsFieldGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -579,6 +585,7 @@ app.controller('GameChangerScheduleController', [
     angular.merge(vm.optionsAggregateFunctions.stats, statFunctions);
     
     vm.optionsStatsGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -683,6 +690,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsPitchStatsGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -742,6 +750,7 @@ app.controller('GameChangerScheduleController', [
     vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsPitchStatsGrid.columns);
     
     vm.optionsBattingOrderGrid = {
+      mobile: true,
       gridObject: null,
       autoBind: false,
       columns: [
