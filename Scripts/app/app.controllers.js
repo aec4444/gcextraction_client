@@ -205,7 +205,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsScheduleGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -243,7 +243,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsPitchesSeenGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -315,7 +315,7 @@ app.controller('GameChangerScheduleController', [
     }
     
     vm.optionsOutsGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -378,7 +378,7 @@ app.controller('GameChangerScheduleController', [
     }
     
     vm.optionsRunnersGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -433,7 +433,7 @@ app.controller('GameChangerScheduleController', [
     
 
     vm.optionsDistGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -475,7 +475,7 @@ app.controller('GameChangerScheduleController', [
     vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsDistGrid.columns);
 
     vm.optionsFieldGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -585,7 +585,7 @@ app.controller('GameChangerScheduleController', [
     angular.merge(vm.optionsAggregateFunctions.stats, statFunctions);
     
     vm.optionsStatsGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -690,7 +690,7 @@ app.controller('GameChangerScheduleController', [
     };
     
     vm.optionsPitchStatsGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
@@ -750,7 +750,7 @@ app.controller('GameChangerScheduleController', [
     vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsPitchStatsGrid.columns);
     
     vm.optionsBattingOrderGrid = {
-      mobile: true,
+      mobile: false,
       gridObject: null,
       autoBind: false,
       columns: [
