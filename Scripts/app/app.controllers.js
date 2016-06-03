@@ -209,13 +209,13 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "include", template: '<input ng-model="dataItem.include" type="checkbox"></input>', title: "Include", attributes: { "class": "text-center col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "play_time", template: "#= kendo.toString(kendo.parseDate(play_time), 'MM/dd/yyyy h:mm tt') #", title: "Start Time", attributes: { "class": "text-right col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "location", title: "Location", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "other_team_name", title: "Opponent", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "type", title: "Type", attributes: { "class": "col-xs-1" }, headerAttributes: { "class": "col-xs-1" } },
-        { field: "result", title: "Result", template: "#=result# (#= home ? state.home + '-' + state.away : state.away + '-' + state.home #)", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } },
-        { field: "wl", title: "Record (Tournaments)", attributes: { "class": "col-xs-2" }, headerAttributes: { "class": "col-xs-2" } }
+        { field: "include", template: '<input ng-model="dataItem.include" type="checkbox"></input>', title: "Include", attributes: { "class": "text-center schedule-include" }},
+        { field: "play_time", template: "#= kendo.toString(kendo.parseDate(play_time), 'MM/dd/yyyy h:mm tt') #", title: "Start Time", attributes: { "class": "text-right schedule-datetime" } },
+        { field: "location", title: "Location", attributes: { "class": "schedule-location" } },
+        { field: "other_team_name", title: "Opponent", attributes: { "class": "schedule-opponent" } },
+        { field: "type", title: "Type", attributes: { "class": "schedule-type" } },
+        { field: "result", title: "Result", template: "#=result# (#= home ? state.home + '-' + state.away : state.away + '-' + state.home #)", attributes: { "class": "schedule-result" } },
+        { field: "wl", title: "Record (Tournaments)", attributes: { "class": "schedule-record" }}
       ],
       excel: {
         allPages: true,
@@ -235,6 +235,7 @@ app.controller('GameChangerScheduleController', [
         }
       })
     };
+    vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsScheduleGrid.columns);
 
     vm.optionsAggregateFunctions.pitches = {
       pitchesPerPa: function() {
