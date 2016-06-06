@@ -532,7 +532,7 @@ app.controller('GameChangerScheduleController', [
     angular.forEach(vm.optionsFieldGrid.columns, function (col, i) {
       var fieldKey = col.field.substr(0, col.field.length - 6);
 
-      if (i >= 2)
+      if (i >= 1)
         col.template = "#= " + fieldKey + ".start # / #= " + col.field + "# (#= kendo.toString(" + fieldKey + ".innings, 'n1')#)";
     });
     
