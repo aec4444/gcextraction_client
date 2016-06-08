@@ -266,6 +266,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", footerTemplate: "Totals", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "pa", aggregates: ["sum"], title: "PA", attributes: { "class": "text-right stat-cell" } },
         { field: "pitches", aggregates: ["sum"], title: "P Seen", attributes: { "class": "text-right stat-cell" } },
         { field: "pitchesPerPa", footerTemplate: vm.optionsAggregateFunctions.pitches.pitchesPerPa, format: "{0:n3}", title: "P / PA", attributes: { "class": "text-right avg-cell" } },
@@ -338,6 +339,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, footerTemplate: "Total", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "outs0.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.AVG("outs0");}, title: "AVG (0 Outs)", template: "#= kendo.toString(outs0.AVG, 'n3')# (#= outs0.H#-#= outs0.AB#)", attributes: { "class": "text-right avgbig-cell" } },
         { field: "outs0.OBP", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.OBP("outs0");}, title: "OBP (0 Outs)", template: "#= kendo.toString(outs0.OBP, 'n3')# (#= outs0.OnBase#-#= outs0.PA#)", attributes: { "class": "text-right avgbig-cell" } },
         { field: "outs1.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.outs.AVG("outs1");}, title: "AVG (1 Outs)", template: "#= kendo.toString(outs1.AVG, 'n3')# (#= outs1.H#-#= outs1.AB#)", attributes: { "class": "text-right avgbig-cell" } },
@@ -401,6 +403,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }},
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "empty.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.AVG("empty");}, title: "AVG (Empty)", template: "#= kendo.toString(empty.AVG, 'n3')# (#= empty.H#-#= empty.AB#)", attributes: { "class": "text-right avgbig-cell" }},
         { field: "empty.OBP", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.OBP("empty");}, title: "OBP (Empty)", template: "#= kendo.toString(empty.OBP, 'n3')# (#= empty.OnBase#-#= empty.PA#)", attributes: { "class": "text-right avgbig-cell" }},
         { field: "onbase.AVG", footerTemplate: function() {return vm.optionsAggregateFunctions.runners.AVG("onbase");}, title: "AVG (On Base)", template: "#= kendo.toString(onbase.AVG, 'n3')# (#= onbase.H#-#= onbase.AB#)", attributes: { "class": "text-right avgbig-cell" }},
@@ -455,6 +458,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "if", aggregates: ["sum"], title: "Infield", attributes: { "class": "text-right stat-cell" } },
         { field: "of", aggregates: ["sum"], title: "Outfield", attributes: { "class": "text-right stat-cell" } },
         { field: "left", aggregates: ["sum"], title: "Left Side", attributes: { "class": "text-right stat-cell" } },
@@ -497,6 +501,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "P.games", title: "P", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "C.games", title: "C", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
         { field: "field1B.games", title: "1B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
@@ -532,7 +537,7 @@ app.controller('GameChangerScheduleController', [
     angular.forEach(vm.optionsFieldGrid.columns, function (col, i) {
       var fieldKey = col.field.substr(0, col.field.length - 6);
 
-      if (i >= 1)
+      if (i >= 2)
         col.template = "#= " + fieldKey + ".start # / #= " + col.field + "# (#= kendo.toString(" + fieldKey + ".innings, 'n1')#)";
     });
     
@@ -616,6 +621,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, title: "Name", footerTemplate: "Totals", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "stats.GP", footerTemplate: vm.optionsAggregateFunctions.stats.GP, title: "GP", attributes: { "class": "text-right stat-cell" }, headerAttributes: { "class": "stat-cell" } },
         { field: "stats.PA", aggregates: ["sum"], title: "PA", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.AB", aggregates: ["sum"], title: "AB", attributes: { "class": "text-right stat-cell" } },
@@ -722,6 +728,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "stats.GP", footerTemplate: vm.optionsAggregateFunctions.stats.GP, title: "GP", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.GS", title: "GS", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.IP", footerTemplate: vm.optionsAggregateFunctions.pitchStats.IP, format: "{0:n1}", title: "IP", attributes: { "class": "text-right avg-cell" } },
@@ -782,6 +789,7 @@ app.controller('GameChangerScheduleController', [
       autoBind: false,
       columns: [
         { field: "player.fname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "pos1", title: "1", attributes: { "class": "text-right stat-cell" } },
         { field: "pos2", title: "2", attributes: { "class": "text-right stat-cell" } },
         { field: "pos3", title: "3", attributes: { "class": "text-right stat-cell" } },
