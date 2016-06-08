@@ -534,6 +534,7 @@ app.controller('GameChangerScheduleController', [
       })
     };
 
+    vm.optionsAggregateFunctions.setFooterAndSum(vm.optionsFieldGrid.columns);
     angular.forEach(vm.optionsFieldGrid.columns, function (col, i) {
       var fieldKey = col.field.substr(0, col.field.length - 6);
 
