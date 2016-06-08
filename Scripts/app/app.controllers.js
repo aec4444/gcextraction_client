@@ -457,7 +457,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.lname", footerTemplate: "Totals", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "if", aggregates: ["sum"], title: "Infield", attributes: { "class": "text-right stat-cell" } },
         { field: "of", aggregates: ["sum"], title: "Outfield", attributes: { "class": "text-right stat-cell" } },
@@ -728,7 +728,7 @@ app.controller('GameChangerScheduleController', [
       gridObject: null,
       autoBind: false,
       columns: [
-        { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
+        { field: "player.lname", locked: false, footerTemplate: "Totals", title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
         { field: "stats.GP", footerTemplate: vm.optionsAggregateFunctions.stats.GP, title: "GP", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.GS", title: "GS", attributes: { "class": "text-right stat-cell" } },
