@@ -61,8 +61,8 @@
   return {
     defaultTeam: "10",
     teamKeys: teamKeys,
-    //statsUrl: "http://gamechanger-aec4444.rhcloud.com",
-    statsUrl: "http://localhost:8081",
+    statsUrl: "http://gamechanger-aec4444.rhcloud.com",
+    //statsUrl: "http://localhost:8081",
     getKeys: function(team) {
       var keys = teamKeys[team];
       return keys || defaultKeys;
