@@ -32,6 +32,25 @@
     season: "spring-2016",
     displayName: "PA Ball Hawks 10U"
   };
+  teamKeys["PASTRIKERS"] = {
+    name: "pa-strikers-10-u-black",
+    teamId: "56ee2d0ef706440024c745ab",
+    season: "spring-2016",
+    displayName: "PA Strikers 10U"
+  };
+  teamKeys["MDLEGENDS"] = {
+    name: "maryland-legends-10u",
+    teamId: "571a31154cae00d826000881",
+    season: "spring-2016",
+    displayName: "Maryland Legends 10U"
+  };
+  teamKeys["LVP"] = {
+    name: "10u-lehigh-valley-patriot-flames",
+    teamId: "5235a511d216187dd6044a70",
+    season: "spring-2016",
+    displayName: "10U Lehigh Valley Patriot Flames"
+  };
+
   teamKeys["NJFIGHT"] = {
     name: "nj-fight",
     teamId: "56f66238c7dd559da5000001",
@@ -42,8 +61,8 @@
   return {
     defaultTeam: "10",
     teamKeys: teamKeys,
-    statsUrl: "http://gamechanger-aec4444.rhcloud.com",
-    //statsUrl: "http://localhost:8081",
+    //statsUrl: "http://gamechanger-aec4444.rhcloud.com",
+    statsUrl: "http://localhost:8081",
     getKeys: function(team) {
       var keys = teamKeys[team];
       return keys || defaultKeys;
