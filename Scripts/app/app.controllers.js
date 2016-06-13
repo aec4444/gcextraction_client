@@ -1,6 +1,6 @@
 app.controller('GameChangerScheduleController', [
-  '$scope', '$gameChanger', '$stateParams', "$globals", "$filter", "$state",
-  function ($scope, $gameChanger, $stateParams, $globals, $filter, $state) {
+  '$scope', '$gameChanger', '$stateParams', "$globals", "$filter", "$state", "$calcs",
+  function ($scope, $gameChanger, $stateParams, $globals, $filter, $state, $calcs) {
     var vm = this;
     vm.data = {
       pitchData: [],
@@ -180,42 +180,36 @@ app.controller('GameChangerScheduleController', [
             }
         });
       },
-      getRC: function(AB, H, BB, CS, HBP, Double, Triple, HR, SAC, SB, PA) {
-        var part1 = (H + BB + CS + HBP);
-        var part2 = (H + Double + Triple * 2 + HR * 3);
-        part2 += (0.26 * (BB + HBP));
-        part2 += (0.52 * (SAC + SB));
-        part1 *= part2;
+      getAvg: function(options, n, d, format) {
+        var agg;
+
+        if (options)
+          agg = this.getAggregates(options);
+
+        format = format || "n3";
         
-        return part1 / (PA || 1);
+        if (agg) {
+          // sum the N and the D
+          var sumN = 0;
+          var sumD = 0;
+          angular.forEach(n, function(field) {
+            sumN += agg[field].sum;
+          });
+          angular.forEach(d, function(field) {
+            sumD += agg[field].sum;
+          });
+          
+          var avg = sumD === 0 ? 0 : (sumN / sumD);
+          return format === "raw" ? avg : kendo.toString(avg, format);
+        }
+        else
+          return "";
       },
       autoFitColumns: function(grid) {
         //for (var i = 0; i < grid.columns.length; i++) {
         //  grid.autoFitColumn(i);
         //}
       }
-    };
-    
-    vm.optionsAggregateFunctions.getAvg = function(gridOptions, n, d, format) {
-      var agg = vm.optionsAggregateFunctions.getAggregates(gridOptions);
-      format = format || "n3";
-      
-      if (agg) {
-        // sum the N and the D
-        var sumN = 0;
-        var sumD = 0;
-        angular.forEach(n, function(field) {
-          sumN += agg[field].sum;
-        });
-        angular.forEach(d, function(field) {
-          sumD += agg[field].sum;
-        });
-        
-        var avg = sumD === 0 ? 0 : (sumN / sumD);
-        return format === "raw" ? avg : kendo.toString(avg, format);
-      }
-      else
-        return "";
     };
     
     vm.optionsScheduleGrid = {
@@ -258,8 +252,6 @@ app.controller('GameChangerScheduleController', [
       }
     };
 
-//        { field: "player.num", title: "#", attributes: { "class": " text-right jersey-cell" } },
-    
     vm.optionsPitchesSeenGrid = {
       mobile: false,
       gridObject: null,
@@ -545,17 +537,17 @@ app.controller('GameChangerScheduleController', [
     vm.optionsAggregateFunctions.stats = {
       SLGRaw: function() {
         var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
-        if (agg) {
-          var n = agg["stats.H"].sum + agg["stats.Double"].sum + (agg["stats.Triple"].sum * 2) + (agg["stats.HR"].sum * 3);
-          var d = agg["stats.AB"].sum;
-          var avg = d === 0 ? 0 : (n / d);
-          return avg;
-        }
+        if (agg)
+          return $calcs.SLG(agg["stats.AB"].sum, agg["stats.H"].sum, agg["stats.Double"].sum, agg["stats.Triple"].sum, agg["stats.HR"].sum);
         else 
           return 0;
       },
       OBPRaw: function() {
-        return vm.optionsAggregateFunctions.getAvg(vm.optionsStatsGrid, ["stats.H", "stats.BB", "stats.HBP"], ["stats.AB", "stats.BB", "stats.HBP"], "raw");
+        var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
+        if (agg) 
+          return $calcs.OBP(agg["stats.AB"].sum, agg["stats.H"].sum, agg["stats.BB"].sum, agg["stats.HBP"].sum);
+        else 
+          return 0;
       }
     };
     
@@ -564,11 +556,38 @@ app.controller('GameChangerScheduleController', [
         var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
         var rc = 0;
         if (agg != null) {
-          rc = vm.optionsAggregateFunctions.getRC(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum);
+          rc = $calcs.RC(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum, agg["stats.SO"].sum);
         }
         
         return kendo.toString(rc, "n3");
       },
+      RC21: function() {
+        var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
+        var rc = 0;
+        if (agg != null) {
+          rc = $calcs.RC21(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum, agg["stats.SO"].sum);
+        }
+        
+        return kendo.toString(rc, "n3");
+      },
+      XR: function() {
+        var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
+        var xr = 0;
+        if (agg != null) {
+          xr = $calcs.XR(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum, agg["stats.SO"].sum);
+        }
+        
+        return kendo.toString(xr, "n3");
+      },
+      XR21: function() {
+        var agg = vm.optionsAggregateFunctions.getAggregates(vm.optionsStatsGrid);
+        var xr = 0;
+        if (agg != null) {
+          xr = $calcs.XR21(agg["stats.AB"].sum,  agg["stats.H"].sum,  agg["stats.BB"].sum,  agg["stats.CS"].sum,  agg["stats.HBP"].sum,  agg["stats.Double"].sum,  agg["stats.Triple"].sum,  agg["stats.HR"].sum,  agg["stats.SAC"].sum,  agg["stats.SB"].sum,  agg["stats.PA"].sum, agg["stats.SO"].sum);
+        }
+        
+        return kendo.toString(xr, "n3");
+      },      
       SO: function() {
         if (vm.optionsStatsGrid !== undefined) {
           var ds = vm.optionsStatsGrid.dataSource;
@@ -646,8 +665,11 @@ app.controller('GameChangerScheduleController', [
         { field: "stats.SLG", footerTemplate: vm.optionsAggregateFunctions.stats.SLG, format: "{0:n3}", title: "SLG", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.OPS", footerTemplate: vm.optionsAggregateFunctions.stats.OPS, format: "{0:n3}", title: "OPS", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.AVGRISP", footerTemplate: vm.optionsAggregateFunctions.stats.AVGRISP, format: "{0:n3}", title: "AVG-RISP", attributes: { "class": "text-right avgbig-cell" } },
-        { field: "stats.QABPCT", footerTemplate: vm.optionsAggregateFunctions.stats.QABPCT, format: "{0:0.00%}", title: "QAB%", attributes: { "class": "text-right avg-cell" } },
-        { field: "stats.RC", footerTemplate: vm.optionsAggregateFunctions.stats.RC, format: "{0:n3}", title: "RC", attributes: { "class": "text-right avgbig-cell" } }
+        { field: "stats.QABPCT", footerTemplate: vm.optionsAggregateFunctions.stats.QABPCT, format: "{0:0.00%}", title: "QAB%", attributes: { "class": "text-right avgbig-cell" } },
+        { field: "stats.RC", footerTemplate: vm.optionsAggregateFunctions.stats.RC, format: "{0:n3}", title: "RC", attributes: { "class": "text-right avgbig-cell" } },
+        { field: "stats.RC21", footerTemplate: vm.optionsAggregateFunctions.stats.RC21, format: "{0:n3}", title: "RC/Out", attributes: { "class": "text-right avgbig-cell" } },
+        { field: "stats.XR", footerTemplate: vm.optionsAggregateFunctions.stats.XR, format: "{0:n3}", title: "XR", attributes: { "class": "text-right avgbig-cell" } },
+        { field: "stats.XR21", footerTemplate: vm.optionsAggregateFunctions.stats.XR21, format: "{0:n3}", title: "XR/Out", attributes: { "class": "text-right avgbig-cell" } }
       ],
       excel: {
         allPages: true,
@@ -935,7 +957,10 @@ app.controller('GameChangerScheduleController', [
           item.stats.SAC = item.stats.SHB + item.stats.SHF;
           item.stats.KPCT = item.stats.SO / (item.stats.PA || 1)
           
-          item.stats.RC = vm.optionsAggregateFunctions.getRC(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA);
+          item.stats.RC = $calcs.RC(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA, item.stats.SO);
+          item.stats.RC21 = $calcs.RC21(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA, item.stats.SO);
+          item.stats.XR = $calcs.XR(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA, item.stats.SO);
+          item.stats.XR21 = $calcs.XR21(item.stats.AB, item.stats.H, item.stats.BB, item.stats.CS, item.stats.HBP, item.stats.Double, item.stats.Triple, item.stats.HR, item.stats.SAC, item.stats.SB, item.stats.PA, item.stats.SO);
         });
         vm.optionsStatsGrid.gridObject.dataSource.read();
 
