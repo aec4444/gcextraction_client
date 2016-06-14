@@ -128,8 +128,12 @@ app.controller('GameChangerScheduleController', [
       league: true,
       nonLeague: true,
       exhibition: false,
-      postSeason: true
+      postSeason: true,
+      win: true,
+      loss: true,
+      tie: true
     };
+
     $scope.$watch("vm.gameSelection", function () {
       // set checkboxes appropriately if set
       if (vm.optionsScheduleGrid !== undefined && vm.optionsScheduleGrid.gridObject !== undefined) {
@@ -149,6 +153,18 @@ app.controller('GameChangerScheduleController', [
               break;
             case "Non-League":
               ditem.include = vm.gameSelection.nonLeague;
+              break;
+          }
+
+          switch (ditem.result) {
+            case "W":
+              ditem.include = ditem.include && vm.gameSelection.win;
+              break;
+            case "L":
+              ditem.include = ditem.include && vm.gameSelection.loss;
+              break;
+            case "T":
+              ditem.include = ditem.include && vm.gameSelection.tie;
               break;
           }
         }

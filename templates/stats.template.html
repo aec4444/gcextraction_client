@@ -34,8 +34,10 @@
 
     <div style="padding: 1em">
       <div class="panel panel-default">
-        <div class="panel-heading">Select Games to use in Statistics</div>
-        <div class="panel-body">
+        <div class="panel-heading">
+          <div class="panel-title"><a href="#selectCollapse" data-toggle="collapse">Select Games to use in Statistics</a></div>
+        </div>
+        <div id="selectCollapse" class="panel-body collapse">
           <div class="text-center filterRow">
             Use the checkboxes below to select games based on type.
           </div>
@@ -51,6 +53,17 @@
             </label>
             <label class="checkbox-inline">
               <input type="checkbox" id="checkboxExhibition" ng-model="vm.gameSelection.exhibition"> Exhibition
+            </label>
+          </div>
+          <div class="text-center filterRow">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxWins" ng-model="vm.gameSelection.win"> Wins
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxLosses" ng-model="vm.gameSelection.loss"> Losses
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="checkboxTies" ng-model="vm.gameSelection.tie"> Ties
             </label>
           </div>
           <div class="text-center filterRow">
