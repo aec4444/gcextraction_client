@@ -2,7 +2,8 @@
   angular
     .module("GameChangerExtraction")
     .directive("ifLoading", ifLoadingDirective)
-    .directive("ifNotLoading", ifNotLoadingDirective);
+    .directive("ifNotLoading", ifNotLoadingDirective)
+    .directive("preventDefaultClick", preventDefaultClickDirective)
 
   ifLoadingDirective.$inject = ["$http"];
   function ifLoadingDirective($http) {
@@ -60,5 +61,13 @@
         }
       }
     };
+  }
+
+  function preventDefaultClickDirective() {
+    return function (scope, element, attrs) {
+      $(element).click(function (event) {
+        event.preventDefault();
+      });
+    }
   }
 })();
