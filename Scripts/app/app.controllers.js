@@ -676,6 +676,7 @@ app.controller('GameChangerScheduleController', [
         { field: "stats.LOB", aggregates: ["sum"], title: "LOB", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.SAC", aggregates: ["sum"], title: "SAC", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.ROE", aggregates: ["sum"], title: "ROE", attributes: { "class": "text-right stat-cell" } },
+        { field: "stats.GroundOFOut", aggregates: ["sum"], title: "GOF", attributes: { "class": "text-right stat-cell" } },
         { field: "stats.AVG", footerTemplate: vm.optionsAggregateFunctions.stats.AVG, format: "{0:n3}", title: "AVG", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.OBP", footerTemplate: vm.optionsAggregateFunctions.stats.OBP, format: "{0:n3}", title: "OBP", attributes: { "class": "text-right avg-cell" } },
         { field: "stats.SLG", footerTemplate: vm.optionsAggregateFunctions.stats.SLG, format: "{0:n3}", title: "SLG", attributes: { "class": "text-right avg-cell" } },
@@ -719,6 +720,7 @@ app.controller('GameChangerScheduleController', [
           {field: "stats.ROE", aggregate: "sum"},
           {field: "stats.QAB", aggregate: "sum"},
           {field: "stats.HRISP", aggregate: "sum"},
+          {field: "stats.GroundOFOut", aggregate: "sum"},
           {field: "stats.ABRISP", aggregate: "sum"}
         ],
         transport: {
