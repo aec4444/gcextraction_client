@@ -16,6 +16,7 @@
 
     var teamKeys = {};
     teamKeys["12"] = defaultKeys;
+    teamKeys["14Dean"] = {teamId: "57dc39004e2701942a000683", name: "nj-pride-14u-dean", season: "fall-2016", displayName: "NJ Pride 14u-Dean"};
 
 
     return {
