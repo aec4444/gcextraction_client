@@ -282,7 +282,8 @@ app.controller('GameChangerScheduleController', [
         { field: "strikesSwinging", aggregates: ["sum"], title: "K / S", attributes: { "class": "text-right stat-cell" } },
         { field: "fouls", aggregates: ["sum"], title: "Fouls", attributes: { "class": "text-right stat-cell" } },
         { field: "balls", aggregates: ["sum"], title: "Balls", attributes: { "class": "text-right stat-cell" } },
-        { field: "inPlay", aggregates: ["sum"], title: "In Play", attributes: { "class": "text-right stat-cell" } }
+        { field: "inPlay", aggregates: ["sum"], title: "In Play", attributes: { "class": "text-right stat-cell" } },
+        { field: "bunts", aggregates: ["sum"], title: "Bunts", attributes: { "class": "text-right stat-cell" } }
       ],
       excel: {
         allPages: true,
@@ -303,7 +304,8 @@ app.controller('GameChangerScheduleController', [
           {field: "strikesSwinging", aggregate: "sum"},
           {field: "fouls", aggregate: "sum"},
           {field: "balls", aggregate: "sum"},
-          {field: "inPlay", aggregate: "sum"}
+          {field: "inPlay", aggregate: "sum"},
+          {field: "bunts", aggregate: "sum"}
         ],
         transport: {
           read: function (e) {
@@ -467,6 +469,7 @@ app.controller('GameChangerScheduleController', [
       columns: [
         { field: "player.lname", footerTemplate: "Totals", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" } },
         { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
+        { field: "bunts", aggregates: ["sum"], title: "Bunts", attributes: { "class": "text-right stat-cell" } },
         { field: "if", aggregates: ["sum"], title: "Infield", attributes: { "class": "text-right stat-cell" } },
         { field: "of", aggregates: ["sum"], title: "Outfield", attributes: { "class": "text-right stat-cell" } },
         { field: "left", aggregates: ["sum"], title: "Left Side", attributes: { "class": "text-right stat-cell" } },
@@ -487,6 +490,7 @@ app.controller('GameChangerScheduleController', [
           { field: "total", dir: "desc" }
         ],
         aggregate: [
+          {field: "bunts", aggregate: "sum"},
           {field: "if", aggregate: "sum"},
           {field: "of", aggregate: "sum"},
           {field: "left", aggregate: "sum"},
@@ -947,6 +951,10 @@ app.controller('GameChangerScheduleController', [
         // hit distribution
         sumValuesPrimitive(vm.data.distData, ["LF", "CF", "RF", "SF"], "of");
         sumValuesPrimitive(vm.data.distData, ["P", "C", "1B", "2B", '3B', "SS"], "if");
+        angular.forEach(vm.data.distData, function(item) {
+          item.if -= item.bunts;
+        });
+
         sumValuesPrimitive(vm.data.distData, ["P", "C", "CF", 'SF'], "middle");
         sumValuesPrimitive(vm.data.distData, ["1B", "2B", "RF"], "right");
         sumValuesPrimitive(vm.data.distData, ['3B', "SS", "LF"], "left");
