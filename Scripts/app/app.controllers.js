@@ -514,17 +514,17 @@ app.controller('GameChangerScheduleController', [
       columns: [
         { field: "player.lname", locked: false, title: "Name", template: "#= player.fname# #= player.lname#", attributes: { "class": "name-cell" }, headerAttributes: { "class": "name-cell" } },
         { field: "player.num", footerTemplate: "", locked: false, title: "#", attributes: { "class": "jersey-cell" } },
-        { field: "P.games", title: "P", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "C.games", title: "C", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "field1B.games", title: "1B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "field2B.games", title: "2B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "field3B.games", title: "3B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "SS.games", title: "SS", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "LF.games", title: "LF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "CF.games", title: "CF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "RF.games", title: "RF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "SF.games", title: "SF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
-        { field: "total.games", title: "Total", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } }
+        { field: "P.thirds", title: "P", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "C.thirds", title: "C", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "field1B.thirds", title: "1B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "field2B.thirds", title: "2B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "field3B.thirds", title: "3B", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "SS.thirds", title: "SS", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "LF.thirds", title: "LF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "CF.thirds", title: "CF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "RF.thirds", title: "RF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "SF.thirds", title: "SF", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } },
+        { field: "total.thirds", title: "Total", attributes: { "class": "text-right avgbig-cell" }, headerAttributes: { "class": "avgbig-cell" } }
       ],
       excel: {
         allPages: true,
