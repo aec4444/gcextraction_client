@@ -965,9 +965,6 @@ app.controller('GameChangerScheduleController', [
         angular.forEach(vm.data.fieldData, function (item) {
           angular.forEach(["P", "C", '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'SF', "total"], function (pos) {
             item[pos].innings = Math.floor(item[pos].thirds / 3) + (item[pos].thirds % 3) / 10;
-
-            if (pos !== "total")
-              item["total"].start += item[pos].start;
           });
 
           item["field1B"] = item["1B"];
