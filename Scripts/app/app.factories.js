@@ -15,8 +15,8 @@
     };
 
     var teamKeys = {};
-    teamKeys["12"] = defaultKeys;
-    teamKeys["FALL12"] = {
+    teamKeys["FALL12"] = defaultKeys;
+    teamKeys["12"] = {
       teamId: '57da99dbbb36b30023bc460f',
       name: "nj-pride-12u-weir",
       season: "spring-2017",
