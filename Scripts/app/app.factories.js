@@ -8,7 +8,7 @@
 
   function globalsFactory() {
     var defaultKeys = {
-      teamId: '57da99dbbb36b30023bc460f',
+      teamId: '58ba33b6b1ec06c89e000001',
       name: "nj-pride-12u-weir",
       season: "spring-2017",
       displayName: "NJ Pride 12u"
@@ -16,7 +16,7 @@
 
     var teamKeys = {};
     teamKeys["FALL12"] = {
-      teamId: '58ba33b6b1ec06c89e000001',
+      teamId: '57da99dbbb36b30023bc460f',
       name: "nj-pride-12u",
       season: "fall-2016",
       displayName: "NJ Pride 12u"
