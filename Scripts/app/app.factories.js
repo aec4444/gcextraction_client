@@ -16,19 +16,12 @@
 
     var teamKeys = {};
     teamKeys["FALL12"] = {
-      teamId: '57da99dbbb36b30023bc460f',
-      name: "nj-pride-12u",
-      season: "fall-2016",
+      teamId: '59bac2a264bf410020d21209',
+      name: "nj-pride-12u-black-12u",
+      season: "fall-2017",
       displayName: "NJ Pride 12u"
     };
     teamKeys["12"] = defaultKeys;
-
-    teamKeys["12V"] = {
-      teamId: '58e651e54d1d28d43b000001',
-      name: "nj-pride-12u-vincent",
-      season: "spring-2017",
-      displayName: "NJ Pride 12u - Vincent"
-    };
 
     teamKeys["14DEAN"] = {teamId: "586dc31e2a6fbb0024cb6663", name: "nj-pride-dean-14u", season: "spring-2017", displayName: "NJ Pride 14u-Dean"};
     teamKeys["10"] = {teamId: "586abd8faae4970024095349", name: "nj-pride-10u", season: "spring-2017", displayName: "NJ Pride 10u 2017 Spring"}
