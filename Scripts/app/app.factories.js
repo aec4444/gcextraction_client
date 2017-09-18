@@ -8,23 +8,20 @@
 
   function globalsFactory() {
     var defaultKeys = {
-      teamId: '58ba33b6b1ec06c89e000001',
-      name: "nj-pride-12u-weir",
-      season: "spring-2017",
-      displayName: "NJ Pride 12u"
-    };
-
-    var teamKeys = {};
-    teamKeys["FALL12"] = {
       teamId: '59bac2a264bf410020d21209',
       name: "nj-pride-12u-black-12u",
       season: "fall-2017",
       displayName: "NJ Pride 12u"
     };
-    teamKeys["12"] = defaultKeys;
 
-    teamKeys["14DEAN"] = {teamId: "586dc31e2a6fbb0024cb6663", name: "nj-pride-dean-14u", season: "spring-2017", displayName: "NJ Pride 14u-Dean"};
-    teamKeys["10"] = {teamId: "586abd8faae4970024095349", name: "nj-pride-10u", season: "spring-2017", displayName: "NJ Pride 10u 2017 Spring"}
+    var teamKeys = {};
+    teamKeys["14DEAN"] = {
+      teamId: '59bc005422c407fc5d000001',
+      name: "nj-pride-14u",
+      season: "fall-2017",
+      displayName: "NJ Pride 14u - Dean"
+    };
+    teamKeys["12"] = defaultKeys;
     
     return {
       defaultTeam: "12",
